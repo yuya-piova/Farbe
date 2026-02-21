@@ -173,16 +173,38 @@ document.getElementById('add-pin-rule').onclick = () => {
 
 // === 保存処理 ===
 document.getElementById('save-rules').onclick = () => {
+  // Taxi Tabs
   const tabRules = getTabRules();
   const blockRules = getBlockRules();
   const pinRules = getPinRules();
   const autoSort = document.getElementById('auto-sort-toggle').checked;
+  // Make Piece
+  const makePieceEndpoint = document
+    .getElementById('makepiece-endpoint')
+    .value.trim();
 
-  chrome.storage.local.set({ tabRules, blockRules, pinRules, autoSort }, () => {
-    const msg = document.getElementById('message');
-    msg.classList.add('show');
-    setTimeout(() => msg.classList.remove('show'), 2000);
-  });
+  // Diverse Observer
+  const lineEnabled = document.getElementById('line-enabled').checked;
+  const lineAccessToken = document.getElementById('line-token').value.trim();
+  const lineUserId = document.getElementById('line-userid').value.trim();
+
+  chrome.storage.local.set(
+    {
+      tabRules,
+      blockRules,
+      pinRules,
+      autoSort,
+      makePieceEndpoint,
+      lineEnabled,
+      lineAccessToken,
+      lineUserId,
+    },
+    () => {
+      const msg = document.getElementById('message');
+      msg.classList.add('show');
+      setTimeout(() => msg.classList.remove('show'), 2000);
+    },
+  );
 };
 
 document.getElementById('btn-sort').onclick = () => {
@@ -209,17 +231,58 @@ document.getElementById('btn-sort').onclick = () => {
 
 // === 初期化 ===
 chrome.storage.local.get(
-  ['tabRules', 'blockRules', 'pinRules', 'autoSort'],
+  [
+    'tabRules',
+    'blockRules',
+    'pinRules',
+    'autoSort',
+    'makePieceEndpoint',
+    'lineEnabled',
+    'lineAccessToken',
+    'lineUserId',
+  ],
   (result) => {
+    // Taxi Tabs
     renderTabRules(result.tabRules || []);
     renderBlockRules(result.blockRules || []);
     renderPinRules(result.pinRules || []);
-
     document.getElementById('auto-sort-toggle').checked =
       result.autoSort || false;
+
+    // Make Piece
+    if (result.makePieceEndpoint) {
+      document.getElementById('makepiece-endpoint').value =
+        result.makePieceEndpoint;
+    }
+
+    // Diverse Observer
+    const lineCheckbox = document.getElementById('line-enabled');
+    const lineContainer = document.getElementById('line-settings-container');
+    lineCheckbox.checked = result.lineEnabled || false;
+    document.getElementById('line-token').value = result.lineAccessToken || '';
+    document.getElementById('line-userid').value = result.lineUserId || '';
+
+    if (lineCheckbox.checked) lineContainer.classList.remove('hidden');
+
+    lineCheckbox.addEventListener('change', (e) => {
+      if (e.target.checked) lineContainer.classList.remove('hidden');
+      else lineContainer.classList.add('hidden');
+    });
+
     setTimeout(updateScrollSpy, 50);
   },
 );
+
+document.getElementById('test-line-btn').addEventListener('click', () => {
+  chrome.runtime.sendMessage({
+    type: 'SEND_NOTIFICATION',
+    data: {
+      title: 'テスト通知',
+      message: 'Farbe: LMS評価ボタン監視のテスト通知です。',
+      url: 'https://lms2.s-diverse.com/',
+    },
+  });
+});
 
 const navLinks = document.querySelectorAll('.nav-link');
 const appContainers = document.querySelectorAll('.app-container');

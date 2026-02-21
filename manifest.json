@@ -1,14 +1,30 @@
 {
   "manifest_version": 3,
   "name": "Farbe",
-  "version": "0.1",
-  "description": "複数の記号を統合したスーパーアプリ",
-  "permissions": ["tabs", "tabGroups", "storage", "contextMenus"],
+  "version": "2.0",
+  "description": "TaxiTabs, MakePiece, DiverseObserverを統合したスーパーアプリ",
+  "permissions": [
+    "tabs",
+    "tabGroups",
+    "storage",
+    "contextMenus",
+    "notifications"
+  ],
   "host_permissions": ["<all_urls>"],
+  "icons": {
+    "512": "icon.png"
+  },
   "background": {
     "service_worker": "js/background/service-worker.js",
     "type": "module"
   },
+  "content_scripts": [
+    {
+      "matches": ["*://lms2.s-diverse.com/*"],
+      "js": ["js/background/diverse-observer.js"],
+      "run_at": "document_idle"
+    }
+  ],
   "options_page": "options.html",
   "action": {
     "default_popup": "popup.html"

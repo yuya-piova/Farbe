@@ -104,8 +104,18 @@
         <section id="make-piece-setting" class="section">
           <h2>Make Piece Setting</h2>
           <p class="desc">
-            Make Pieceの統合設定項目をここに配置します。（今後実装予定）
+            Notion（n8n）へタスクを送信するためのWebhookエンドポイントURLを設定します。
           </p>
+          <div class="rule-card">
+            <div class="input-group">
+              <label>Webhook URL:</label>
+              <input
+                type="text"
+                id="makepiece-endpoint"
+                placeholder="https://n8n.your-domain.com/webhook/..."
+              />
+            </div>
+          </div>
         </section>
       </div>
 
@@ -113,15 +123,93 @@
         <section id="diverse-browser" class="section">
           <h2>Browser Observer</h2>
           <p class="desc">
-            ブラウザ監視の設定をここに配置します。（今後実装予定）
+            LMSの評価ボタンが有効になったときにブラウザ通知を表示します。
           </p>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" checked disabled />
+              <span
+                class="slider"
+                style="background-color: var(--primary)"
+              ></span>
+            </label>
+            <div>
+              <div
+                style="font-weight: 600; font-size: 0.95rem; color: var(--text)"
+              >
+                ブラウザ通知 (常時ON)
+              </div>
+              <div style="font-size: 0.85rem; color: #6b7280; margin-top: 2px">
+                ブラウザの通知設定で許可されている必要があります
+              </div>
+            </div>
+          </div>
         </section>
 
         <hr class="section-divider" />
 
         <section id="diverse-line" class="section">
           <h2>LINE Observer</h2>
-          <p class="desc">LINE連携の設定をここに配置します。（今後実装予定）</p>
+          <p class="desc">
+            評価ボタンが有効になったときにLINEにも通知を送信します。
+          </p>
+
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="line-enabled" />
+              <span class="slider"></span>
+            </label>
+            <div>
+              <div
+                style="font-weight: 600; font-size: 0.95rem; color: var(--text)"
+              >
+                LINE通知を有効にする
+              </div>
+            </div>
+          </div>
+
+          <div id="line-settings-container" class="rule-card hidden">
+            <div class="input-group" style="margin-bottom: 15px">
+              <label style="width: 140px">アクセストークン:</label>
+              <input
+                type="password"
+                id="line-token"
+                placeholder="Channel Access Token"
+              />
+            </div>
+            <div class="input-group" style="margin-bottom: 20px">
+              <label style="width: 140px">ユーザーID:</label>
+              <input type="text" id="line-userid" placeholder="User ID" />
+            </div>
+            <div style="display: flex; justify-content: flex-end">
+              <button
+                id="test-line-btn"
+                class="btn-sort"
+                style="background: white"
+              >
+                🔔 テスト通知を送信
+              </button>
+            </div>
+
+            <div class="setup-steps">
+              <h4>📋 LINE通知の設定手順</h4>
+              <ol>
+                <li>
+                  <a href="https://developers.line.biz/console/" target="_blank"
+                    >LINE Developers コンソール</a
+                  >にアクセス
+                </li>
+                <li>新しいプロバイダーとMessaging APIチャンネルを作成</li>
+                <li>「チャンネルアクセストークン」を発行してコピー</li>
+                <li>作成したBotを友だち追加</li>
+                <li>
+                  ユーザーIDを取得（Botにメッセージを送信後、Webhook
+                  URL等で確認）
+                </li>
+                <li>上記の情報を入力して保存</li>
+              </ol>
+            </div>
+          </div>
         </section>
       </div>
     </main>
