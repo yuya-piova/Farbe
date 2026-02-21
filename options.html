@@ -1,0 +1,137 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8" />
+    <title>Farbe Settings</title>
+    <link rel="stylesheet" href="css/global.css" />
+  </head>
+  <body>
+    <aside class="sidebar">
+      <div class="brand">Farbe</div>
+      <div class="divider"></div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">TaxiTabs</div>
+        <nav class="nav-menu">
+          <a class="nav-link active" data-app="taxitabs" data-target="tab-group"
+            >Tab Group</a
+          >
+          <a class="nav-link" data-app="taxitabs" data-target="tab-kill"
+            >Tab Kill</a
+          >
+          <a class="nav-link" data-app="taxitabs" data-target="auto-pin"
+            >Auto Pin</a
+          >
+        </nav>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Make Piece</div>
+        <nav class="nav-menu">
+          <a
+            class="nav-link"
+            data-app="makepiece"
+            data-target="make-piece-setting"
+            >Setting</a
+          >
+        </nav>
+      </div>
+
+      <div class="nav-group">
+        <div class="nav-group-title">Diverse Observer</div>
+        <nav class="nav-menu">
+          <a class="nav-link" data-app="diverse" data-target="diverse-browser"
+            >Browser</a
+          >
+          <a class="nav-link" data-app="diverse" data-target="diverse-line"
+            >LINE</a
+          >
+        </nav>
+      </div>
+    </aside>
+
+    <main class="main-content" id="scroll-area">
+      <div id="app-taxitabs" class="app-container active">
+        <section id="tab-group" class="section">
+          <h2>Tab Group</h2>
+          <p class="desc">
+            上のルールから優先適用。URLはアスタリスク（*）使用可、複数指定は改行。
+          </p>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="auto-sort-toggle" />
+              <span class="slider"></span>
+            </label>
+            <div>
+              <div
+                style="font-weight: 600; font-size: 0.95rem; color: var(--text)"
+              >
+                Auto Sort (自動整理)
+              </div>
+              <div style="font-size: 0.85rem; color: #6b7280; margin-top: 2px">
+                タブが開かれた時やURLが変わった時に、自動的に全体を並び替えます
+              </div>
+            </div>
+          </div>
+          <div id="tab-rules-container"></div>
+          <button id="add-tab-rule" class="btn-add">＋ Add Group Rule</button>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="tab-kill" class="section">
+          <h2>Tab Kill</h2>
+          <p class="desc">
+            条件に一致したタブを強制的に閉じます。親URL（開元）を空にすると、どこから開かれても閉じます。
+          </p>
+          <div id="block-rules-container"></div>
+          <button id="add-block-rule" class="btn-add">＋ Add Kill Rule</button>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="auto-pin" class="section">
+          <h2>Auto Pin</h2>
+          <p class="desc">
+            マッチしたタブを自動的にピン留めし、アイコンのみの最小サイズで左端に固定します。
+          </p>
+          <div id="pin-rules-container"></div>
+          <button id="add-pin-rule" class="btn-add">＋ Add Pin Rule</button>
+        </section>
+      </div>
+
+      <div id="app-makepiece" class="app-container">
+        <section id="make-piece-setting" class="section">
+          <h2>Make Piece Setting</h2>
+          <p class="desc">
+            Make Pieceの統合設定項目をここに配置します。（今後実装予定）
+          </p>
+        </section>
+      </div>
+
+      <div id="app-diverse" class="app-container">
+        <section id="diverse-browser" class="section">
+          <h2>Browser Observer</h2>
+          <p class="desc">
+            ブラウザ監視の設定をここに配置します。（今後実装予定）
+          </p>
+        </section>
+
+        <hr class="section-divider" />
+
+        <section id="diverse-line" class="section">
+          <h2>LINE Observer</h2>
+          <p class="desc">LINE連携の設定をここに配置します。（今後実装予定）</p>
+        </section>
+      </div>
+    </main>
+
+    <div class="actions-fixed">
+      <span id="message">保存しました！</span>
+      <button id="btn-sort" class="btn-sort">Sort Tabs</button>
+      <button id="save-rules" class="btn-save">Save Settings</button>
+    </div>
+
+    <script src="js/options.js"></script>
+  </body>
+</html>

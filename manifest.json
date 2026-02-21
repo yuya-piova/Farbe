@@ -1,0 +1,16 @@
+{
+  "manifest_version": 3,
+  "name": "Farbe",
+  "version": "0.1",
+  "description": "複数の記号を統合したスーパーアプリ",
+  "permissions": ["tabs", "tabGroups", "storage", "contextMenus"],
+  "host_permissions": ["<all_urls>"],
+  "background": {
+    "service_worker": "js/background/service-worker.js",
+    "type": "module"
+  },
+  "options_page": "options.html",
+  "action": {
+    "default_popup": "popup.html"
+  }
+}
