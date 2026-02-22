@@ -21,7 +21,7 @@
   "content_scripts": [
     {
       "matches": ["*://lms2.s-diverse.com/*"],
-      "js": ["js/background/diverse-observer.js"],
+      "js": ["js/content/diverse-observer.js"],
       "run_at": "document_idle"
     }
   ],

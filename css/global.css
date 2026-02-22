@@ -22,7 +22,7 @@ body {
   overflow: hidden; /* 画面全体のスクロールを禁止 */
 }
 
-/* --- サイドバー（iOS風フローティングパネル） --- */
+/* --- サイドバー --- */
 .sidebar {
   position: fixed;
   top: 10px;
@@ -397,4 +397,33 @@ input:checked + .slider:before {
 }
 .setup-steps a:hover {
   text-decoration: underline;
+}
+
+/* ==========================================
+   遊び心：画面幅が広い時限定の優美な透かし（ウォーターマーク）
+   ========================================== */
+@media (min-width: 900px) {
+  body::after {
+    content: '';
+    position: fixed;
+    bottom: -5vh;
+    right: -5vw;
+    width: 50vw;
+    max-width: 600px;
+    height: 80vh;
+    /* 有機的な曲線を描く抽象的なラインアート（SVG） */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 200 200'%3E%3Cpath fill='none' stroke='%23333333' stroke-width='0.5' d='M10,190 C40,150 20,80 80,60 C140,40 130,120 180,90 S220,10 160,-20' /%3E%3Cpath fill='none' stroke='%23333333' stroke-width='0.2' d='M30,210 C70,160 30,100 100,70 C170,40 140,140 200,100' /%3E%3Ccircle cx='180' cy='90' r='2' fill='%23333333' /%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-size: contain;
+    background-position: right bottom;
+    opacity: 0.1; /* ギリギリ見える程度の極薄設定 */
+    pointer-events: none; /* コンテンツのクリックやスクロールを絶対に邪魔しない */
+    z-index: 0;
+    transition: opacity 0.5s ease;
+  }
+
+  .main-content {
+    position: relative;
+    z-index: 1; /* 透かしアートよりも上にUIを配置する */
+  }
 }
