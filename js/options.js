@@ -289,6 +289,92 @@ const appContainers = document.querySelectorAll('.app-container');
 const scrollArea = document.getElementById('scroll-area');
 const btnSort = document.getElementById('btn-sort');
 
+// ==========================================
+// Page Note: メモ管理ロジック
+// ==========================================
+
+// メモ一覧を描画する関数
+function renderNotes() {
+  chrome.storage.local.get(null, (items) => {
+    const notesContainer = document.getElementById('notes-list-container');
+    notesContainer.innerHTML = '';
+
+    let noteCount = 0;
+
+    // ストレージの全データから note_ で始まるものだけを抽出
+    for (const [key, value] of Object.entries(items)) {
+      if (key.startsWith('note_') && value.trim() !== '') {
+        noteCount++;
+        const url = key.replace('note_', '');
+
+        const noteDiv = document.createElement('div');
+        noteDiv.className = 'rule-card'; // 既存の美しいカードスタイルを流用
+        noteDiv.style.display = 'flex';
+        noteDiv.style.flexDirection = 'column';
+        noteDiv.style.gap = '10px';
+
+        noteDiv.innerHTML = `
+          <div style="display: flex; justify-content: space-between; align-items: flex-start;">
+            <div style="font-size: 0.85rem; font-weight: 600; color: var(--primary); word-break: break-all; margin-right: 15px;">
+              <i class="fas fa-link" style="color: #9ca3af; margin-right: 4px;"></i>
+              <a href="${url}" target="_blank" style="color: var(--primary); text-decoration: none;">${url}</a>
+            </div>
+            <button class="btn-delete delete-note-btn" data-key="${key}" style="flex-shrink: 0; padding: 6px 12px;">削除</button>
+          </div>
+          <div style="font-size: 0.9rem; color: var(--text); white-space: pre-wrap; background: #f9fafb; padding: 12px; border-radius: 6px; border: 1px solid var(--border); max-height: 150px; overflow-y: auto; line-height: 1.5;">${value}</div>
+        `;
+
+        notesContainer.appendChild(noteDiv);
+      }
+    }
+
+    if (noteCount === 0) {
+      notesContainer.innerHTML =
+        '<div style="color: #6b7280; font-size: 0.9rem; text-align: center; padding: 30px; background: var(--card-bg); border-radius: 12px; border: 1px dashed var(--border);">保存されているメモはありません。</div>';
+    }
+
+    // 個別削除ボタンのイベント
+    document.querySelectorAll('.delete-note-btn').forEach((btn) => {
+      btn.addEventListener('click', (e) => {
+        const key = e.target.getAttribute('data-key');
+        if (confirm('このメモを削除してもよろしいですか？')) {
+          chrome.storage.local.remove(key, () => {
+            renderNotes(); // 削除後に再描画
+          });
+        }
+      });
+    });
+  });
+}
+
+// 一括削除ボタンのイベント
+document.getElementById('delete-all-notes').addEventListener('click', () => {
+  if (
+    confirm('⚠️ 本当に全てのメモを削除しますか？\nこの操作は取り消せません。')
+  ) {
+    chrome.storage.local.get(null, (items) => {
+      const keysToRemove = Object.keys(items).filter((key) =>
+        key.startsWith('note_'),
+      );
+      chrome.storage.local.remove(keysToRemove, () => {
+        renderNotes(); // 削除後に再描画
+        const msg = document.getElementById('message');
+        msg.textContent = '全メモを削除しました';
+        msg.classList.add('show');
+        setTimeout(() => {
+          msg.classList.remove('show');
+          msg.textContent = '保存しました！'; // 元に戻す
+        }, 2000);
+      });
+    });
+  }
+});
+
+// 設定画面を開いた時（初期化時）にメモ一覧を描画する
+document.addEventListener('DOMContentLoaded', () => {
+  renderNotes();
+});
+
 // 1. メニュークリック時の挙動（アプリ切り替え＆スクロール）
 navLinks.forEach((link) => {
   link.addEventListener('click', (e) => {

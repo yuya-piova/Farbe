@@ -163,7 +163,7 @@ chrome.tabs.onUpdated.addListener(async (tabId, changeInfo, tab) => {
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: 'sort-tabs',
-    title: 'タブを整理・並び替え - TaxiTabs',
+    title: '🗃️ タブを整理・並び替え - TaxiTabs',
     contexts: ['action'],
   });
 });
