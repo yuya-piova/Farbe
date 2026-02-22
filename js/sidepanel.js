@@ -71,5 +71,13 @@ chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   }
 });
 
+// 7. ショートカットキーからの「閉じる（トグル）」命令を受信
+chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
+  if (message.action === 'toggle_side_panel') {
+    sendResponse({ isOpen: true }); // 「開いてるよ！」と返事をしてから...
+    window.close(); // 自分自身をスッと閉じる
+  }
+});
+
 // 実行
 init();

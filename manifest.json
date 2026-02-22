@@ -32,5 +32,21 @@
   "options_page": "options.html",
   "action": {
     "default_popup": "popup.html"
+  },
+  "commands": {
+    "_execute_action": {
+      "suggested_key": {
+        "default": "Alt+M",
+        "mac": "Alt+M"
+      },
+      "description": "Make Piece を開く"
+    },
+    "open_page_note": {
+      "suggested_key": {
+        "default": "Alt+N",
+        "mac": "Alt+N"
+      },
+      "description": "Page Note を開く"
+    }
   }
 }
