@@ -25,8 +25,8 @@ async function handleMakePiece(data) {
 
   // 2. 送信データの組み立て
   const fetchData = {
-    Cat: ['Work'],
-    SubCat: ['Task'],
+    _Area: 'Work',
+    _Type: 'Task',
     State: data.state,
     title: data.taskname || 'TASK FROM MAKEPIECE',
     start: data.duedate || formatDate(new Date()),
