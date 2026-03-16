@@ -256,7 +256,7 @@ chrome.storage.local.get(
       result.autoSort || false;
 
     document.getElementById('closeAllIncludePinned').checked =
-      data.closeAllIncludePinned ?? false;
+      result.closeAllIncludePinned ?? false;
 
     // Make Piece
     if (result.makePieceEndpoint) {

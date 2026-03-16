@@ -93,6 +93,22 @@
           <p class="desc">
             条件に一致したタブを強制的に閉じます。親URL（開元）を空にすると、どこから開かれても閉じます。
           </p>
+          <div class="toggle-container">
+            <label class="toggle-switch">
+              <input type="checkbox" id="closeAllIncludePinned" />
+              <span class="slider"></span>
+            </label>
+            <div>
+              <div
+                style="font-weight: 600; font-size: 0.95rem; color: var(--text)"
+              >
+                All Tabs Kill
+              </div>
+              <div style="font-size: 0.85rem; color: #6b7280; margin-top: 2px">
+                拡張機能アイコンメニュー「タブをすべて閉じる」の時、ピン設定されたタブも削除します
+              </div>
+            </div>
+          </div>
           <div id="block-rules-container"></div>
           <button id="add-block-rule" class="btn-add">＋ Add Kill Rule</button>
         </section>
@@ -107,10 +123,6 @@
           <div id="pin-rules-container"></div>
           <button id="add-pin-rule" class="btn-add">＋ Add Pin Rule</button>
         </section>
-        <label>
-          <input type="checkbox" id="closeAllIncludePinned" />
-          「Close All & New Tab」でピン留めタブも閉じる
-        </label>
       </div>
 
       <div id="app-pagenote" class="app-container">

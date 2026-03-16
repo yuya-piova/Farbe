@@ -341,11 +341,11 @@ async function sortAndGroupTabs() {
   }
 }
 
-// コンテキストメニュー登録（既存の登録処理にappend）
+// メニュー登録（既存の登録処理にappend）
 chrome.contextMenus.create({
   id: 'closeAllAndNewTab',
-  title: 'Close All & New Tab',
-  contexts: ['action'], // 拡張機能アイコンの右クリック
+  title: '🗑️ タブをすべて閉じる - TaxiTabs',
+  contexts: ['action'],
 });
 
 // クリック処理（既存のonClickedリスナーにcaseを追加）
@@ -360,13 +360,14 @@ async function handleCloseAllAndNewTab() {
     'closeAllIncludePinned',
   );
 
-  await chrome.tabs.create({});
+  // 既存タブを先に取得
+  const existingTabs = await chrome.tabs.query({});
 
-  const allTabs = await chrome.tabs.query({});
-  const newTab = allTabs.find((t) => t.url === 'chrome://newtab/' && t.active);
+  // 新規タブを作成し、IDを受け取る
+  const newTab = await chrome.tabs.create({});
 
-  const tabsToClose = allTabs
-    .filter((t) => t.id !== newTab?.id)
+  // 取得済みの既存タブのみを対象に削除
+  const tabsToClose = existingTabs
     .filter((t) => (closeAllIncludePinned ? true : !t.pinned))
     .map((t) => t.id);
 
