@@ -28,7 +28,7 @@ async function handleMakePiece(data) {
     _Area: 'Work',
     _Type: 'Task',
     State: data.state,
-    title: data.taskname || 'TASK FROM MAKEPIECE',
+    title: data.taskname || 'TASK FROM FARBE',
     start: data.duedate || formatDate(new Date()),
     childrenText: data.childrenText || '',
     icon: '☑️',

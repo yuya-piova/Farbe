@@ -340,3 +340,37 @@ async function sortAndGroupTabs() {
     isSorting = false;
   }
 }
+
+// コンテキストメニュー登録（既存の登録処理にappend）
+chrome.contextMenus.create({
+  id: 'closeAllAndNewTab',
+  title: 'Close All & New Tab',
+  contexts: ['action'], // 拡張機能アイコンの右クリック
+});
+
+// クリック処理（既存のonClickedリスナーにcaseを追加）
+chrome.contextMenus.onClicked.addListener((info, tab) => {
+  if (info.menuItemId === 'closeAllAndNewTab') {
+    handleCloseAllAndNewTab();
+  }
+});
+
+async function handleCloseAllAndNewTab() {
+  const { closeAllIncludePinned } = await chrome.storage.local.get(
+    'closeAllIncludePinned',
+  );
+
+  await chrome.tabs.create({});
+
+  const allTabs = await chrome.tabs.query({});
+  const newTab = allTabs.find((t) => t.url === 'chrome://newtab/' && t.active);
+
+  const tabsToClose = allTabs
+    .filter((t) => t.id !== newTab?.id)
+    .filter((t) => (closeAllIncludePinned ? true : !t.pinned))
+    .map((t) => t.id);
+
+  if (tabsToClose.length > 0) {
+    await chrome.tabs.remove(tabsToClose);
+  }
+}

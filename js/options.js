@@ -178,6 +178,10 @@ document.getElementById('save-rules').onclick = () => {
   const blockRules = getBlockRules();
   const pinRules = getPinRules();
   const autoSort = document.getElementById('auto-sort-toggle').checked;
+  const closeAllIncludePinned = document.getElementById(
+    'closeAllIncludePinned',
+  ).checked;
+
   // Make Piece
   const makePieceEndpoint = document
     .getElementById('makepiece-endpoint')
@@ -194,6 +198,7 @@ document.getElementById('save-rules').onclick = () => {
       blockRules,
       pinRules,
       autoSort,
+      closeAllIncludePinned,
       makePieceEndpoint,
       lineEnabled,
       lineAccessToken,
@@ -236,6 +241,7 @@ chrome.storage.local.get(
     'blockRules',
     'pinRules',
     'autoSort',
+    'closeAllIncludePinned',
     'makePieceEndpoint',
     'lineEnabled',
     'lineAccessToken',
@@ -248,6 +254,9 @@ chrome.storage.local.get(
     renderPinRules(result.pinRules || []);
     document.getElementById('auto-sort-toggle').checked =
       result.autoSort || false;
+
+    document.getElementById('closeAllIncludePinned').checked =
+      data.closeAllIncludePinned ?? false;
 
     // Make Piece
     if (result.makePieceEndpoint) {
