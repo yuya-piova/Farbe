@@ -36,7 +36,7 @@
       }
 
       .form-group {
-        margin-bottom: 16px;
+        margin-bottom: 12px;
       }
       .form-label {
         display: block;
@@ -114,7 +114,7 @@
       .date-chips {
         display: flex;
         gap: 6px;
-        margin-top: 8px;
+        /* margin-top: 8px; */
       }
       .date-chip {
         padding: 4px 12px;
@@ -260,19 +260,40 @@
     </div>
 
     <div class="form-group">
-      <label class="form-label">DUE DATE</label>
+      <label class="form-label">SOURCE</label>
       <div class="input-wrapper">
-        <i class="fas fa-calendar input-icon"></i>
-        <input type="date" id="due-date" class="input-field" />
-      </div>
-      <div class="date-chips">
-        <div class="date-chip active" data-offset="0">今日</div>
-        <div class="date-chip" data-offset="1">明日</div>
-        <div class="date-chip" data-offset="7">来週</div>
+        <i class="fas fa-database input-icon"></i>
+        <select
+          id="task-source"
+          class="input-field"
+          style="appearance: none; cursor: pointer"
+        >
+          <option value="LOCAL" selected>LOCAL</option>
+          <option value="NOTION">NOTION</option>
+        </select>
+        <i
+          class="fas fa-chevron-down input-icon"
+          style="left: auto; right: 12px; font-size: 10px"
+        ></i>
       </div>
     </div>
 
-    <button id="makepiece" class="btn-submit">Notionに送る</button>
+    <div class="form-group">
+      <label class="form-label">DUE DATE</label>
+      <div style="display: flex; gap: 8px; align-items: center">
+        <div class="input-wrapper">
+          <i class="fas fa-calendar input-icon"></i>
+          <input type="date" id="due-date" class="input-field" />
+        </div>
+        <div class="date-chips">
+          <div class="date-chip active" data-offset="0">今日</div>
+          <div class="date-chip" data-offset="1">明日</div>
+          <div class="date-chip" data-offset="7">来週</div>
+        </div>
+      </div>
+    </div>
+
+    <button id="makepiece" class="btn-submit">Gleisに送る</button>
 
     <hr
       style="

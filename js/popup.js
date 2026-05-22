@@ -1,6 +1,7 @@
 const taskNameInput = document.querySelector('#task-name');
 const taskContentInput = document.querySelector('#task-content');
 const taskUrlInput = document.querySelector('#task-url');
+const taskSourceInput = document.querySelector('#task-source');
 const dueDateInput = document.querySelector('#due-date');
 const makePieceBtn = document.querySelector('#makepiece');
 const getCurrenturlBtn = document.querySelector('#get-current-url');
@@ -36,8 +37,9 @@ makePieceBtn.addEventListener('click', () => {
   const taskData = {
     taskname: taskName,
     duedate: dueDateInput.value,
-    childrenText: taskContentInput.value,
+    content: taskContentInput.value,
     url: taskUrlInput.value,
+    source: taskSourceInput.value,
     state: taskstate.value,
   };
 

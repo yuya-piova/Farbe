@@ -186,6 +186,9 @@ document.getElementById('save-rules').onclick = () => {
   const makePieceEndpoint = document
     .getElementById('makepiece-endpoint')
     .value.trim();
+  const makePieceApiKey = document
+    .getElementById('makepiece-apikey')
+    .value.trim();
 
   // Diverse Observer
   const lineEnabled = document.getElementById('line-enabled').checked;
@@ -200,6 +203,7 @@ document.getElementById('save-rules').onclick = () => {
       autoSort,
       closeAllIncludePinned,
       makePieceEndpoint,
+      makePieceApiKey,
       lineEnabled,
       lineAccessToken,
       lineUserId,
@@ -243,6 +247,7 @@ chrome.storage.local.get(
     'autoSort',
     'closeAllIncludePinned',
     'makePieceEndpoint',
+    'makePieceApiKey',
     'lineEnabled',
     'lineAccessToken',
     'lineUserId',
@@ -262,6 +267,10 @@ chrome.storage.local.get(
     if (result.makePieceEndpoint) {
       document.getElementById('makepiece-endpoint').value =
         result.makePieceEndpoint;
+    }
+    if (result.makePieceApiKey) {
+      document.getElementById('makepiece-apikey').value =
+        result.makePieceApiKey;
     }
 
     // Diverse Observer

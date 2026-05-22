@@ -161,7 +161,7 @@
         <section id="make-piece-setting" class="section">
           <h2>Make Piece Setting</h2>
           <p class="desc">
-            Notion（n8n）へタスクを送信するためのWebhookエンドポイントURLを設定します。
+            タスクを送信するためのWebhookエンドポイントURLを設定します。
           </p>
           <div class="rule-card">
             <div class="input-group">
@@ -170,6 +170,14 @@
                 type="text"
                 id="makepiece-endpoint"
                 placeholder="https://n8n.your-domain.com/webhook/..."
+              />
+            </div>
+            <div class="input-group" style="margin-top: 15px">
+              <label>API Key:</label>
+              <input
+                type="password"
+                id="makepiece-apikey"
+                placeholder="API Key for authentication"
               />
             </div>
           </div>

@@ -13,8 +13,12 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 
 async function handleMakePiece(data) {
   // 1. Storageから設定されたエンドポイントURLを取得
-  const storage = await chrome.storage.local.get(['makePieceEndpoint']);
+  const storage = await chrome.storage.local.get([
+    'makePieceEndpoint',
+    'makePieceApiKey',
+  ]);
   const endpoint = storage.makePieceEndpoint;
+  const makePieceApiKey = storage.makePieceApiKey;
 
   if (!endpoint) {
     console.error(
@@ -25,13 +29,14 @@ async function handleMakePiece(data) {
 
   // 2. 送信データの組み立て
   const fetchData = {
-    _Area: 'Work',
-    _Type: 'Task',
-    State: data.state,
+    // _Area: 'Work',
+    // _Type: 'Task',
+    status: data.state,
     title: data.taskname || 'TASK FROM FARBE',
-    start: data.duedate || formatDate(new Date()),
-    childrenText: data.childrenText || '',
-    icon: '☑️',
+    dueDate: data.duedate || formatDate(new Date()),
+    source: data.source || 'LOCAL',
+    content: data.content || '',
+    // icon: '☑️',
   };
 
   if (data.url) fetchData.url = data.url;
@@ -40,7 +45,10 @@ async function handleMakePiece(data) {
   try {
     const response = await fetch(endpoint, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'X-API-KEY': makePieceApiKey,
+      },
       body: JSON.stringify(fetchData),
     });
 
